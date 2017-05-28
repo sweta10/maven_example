@@ -15,4 +15,79 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  
+  
+   <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase></phase>
+            <configuration>
+              			  
+			  
+			  <target name="info">
+<echo>info block executed</echo>
+<echo>the ant version is ${ant.version}</echo>
+<echo>${ant.file}</echo>
+</target>
+			  
+			  
+<target name="clean" depends="info">
+<echo>clean block</echo>
+<delete dir="./jar"/>
+<echo>jar folder deleted successfully</echo>
+<echo>Deleting the class files</echo>
+<delete dir="./classes"/>
+<echo>Deleted class files</echo>
+</target>
+
+
+<target name="compile" depends="clean">
+<echo>compile block executed</echo>
+<mkdir dir="./classes"/>
+<javac srcdir="./java" destdir="./classes"/>
+</target>
+
+
+
+<target name="jar" depends="compile">
+<echo>jar block executed</echo>
+<echo>jar block execcuted</echo>
+<mkdir dir="./jar"/>
+<jar destfile="./jar/abc.jar" basedir="./classes">
+
+	<manifest>
+	<attribute name="Main-Class" value="Hello"/>
+	</manifest>
+</jar>
+</target>
+
+
+
+<target name="run" depends="jar">
+<echo>run block</echo>
+<java jar="./jar/abc.jar" fork="true"/>
+</target>
+
+                
+                
+
+				
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>   
+  
+  
+  
+  
 </project>
